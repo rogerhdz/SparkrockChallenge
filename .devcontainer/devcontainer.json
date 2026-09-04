@@ -1,12 +1,6 @@
 {
   "name": "C# .NET 8 Architect Environment",
-  "image": "mcr.microsoft.com/devcontainers/dotnet:8.0",
-  "features": {
-    "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "lts"
-    }
-  },
+  "image": "mcr.microsoft.com/dotnet/sdk:8.0",
   "customizations": {
     "vscode": {
       "extensions": [
@@ -16,5 +10,5 @@
       ]
     }
   },
-  "postCreateCommand": "dotnet tool install -g dotnet-ef"
+  "postCreateCommand": "apt-get update && apt-get install -y nodejs npm && npm config set strict-ssl false && npm install -g @fission-ai/openspec && dotnet tool install -g dotnet-ef"
 }

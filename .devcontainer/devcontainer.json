@@ -1,0 +1,20 @@
+{
+  "name": "C# .NET 8 Architect Environment",
+  "image": "mcr.microsoft.com/devcontainers/dotnet:8.0",
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {},
+    "ghcr.io/devcontainers/features/node:1": {
+      "version": "lts"
+    }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-dotnettools.csdevkit",
+        "ms-dotnettools.csharp",
+        "kavya-manohar.openspec"
+      ]
+    }
+  },
+  "postCreateCommand": "dotnet tool install -g dotnet-ef"
+}

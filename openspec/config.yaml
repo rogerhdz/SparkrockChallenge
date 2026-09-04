@@ -1,0 +1,45 @@
+schema: spec-driven
+githubCopilot:
+  cloudAgent: false
+
+context: |
+  Project: legacy K-12 VB6/SQL migration to .NET 8 Web API.
+
+  Tech stack legacy:
+    Backend: VB6 desktop form
+    Persistence: Sql Server
+
+  Architecture & Constraints (Source of Truth):
+    - MUST follow rules in `docs/sdd/context/context_architecture.md`.
+    - MUST follow rules in `docs/sdd/context/context_business.md`.
+    - MUST follow rules in `docs/sdd/context/context_legacy_inferences.md`.
+
+  OpenSpec conventions:
+    - All feature work requires: proposal -> design -> specs -> tasks.
+    - Each new capability creates openspec/specs/<capability>/spec.md.
+    - Each capability spec covers ONE cohesive feature area and stays small (soft cap ~300 lines / ~12 requirements). Split into a new capability rather than growing a catch-all spec.
+    - `api-foundation` is a FOUNDATION capability only. Feature requirements belong in a focused capability, never appended to it.
+    - Choose the target capability from the Capability Map in project.md; if none fits, create a new kebab-case capability and add it to that map in the same change.
+    - Tasks use checkbox format: - [ ] X.Y Description
+
+rules:
+  proposal:
+    - Keep proposals concise and under 2 pages.
+    - The Capabilities section MUST list every spec that will be created or modified.
+    - Do NOT include implementation details — those belong in design.md.
+  design:
+    - Must explicitly state the persistence strategy (EF Core InMemory) and how data boundaries are maintained.
+    - Must enforce logical Command Query Responsibility Segregation (CQRS) in the Application layer to strictly separate attendance ingestion (Commands) from historical reporting (Queries).
+    - Must define the dependency injection (DI) strategy, favoring Scoped lifetimes for DbContext and business services.
+    - Controllers MUST remain ultra-thin; all business rules, threshold evaluations, and mapping must be delegated to the Application Service layer.
+    - Must define the exact idempotency key or composite mechanism that will be used to prevent duplicate absence counting during bulk upserts.
+    - Must address how the legacy XML payload structure is conceptually transformed into the modern JSON DTO structure without leaking legacy naming conventions into the domain model.
+  specs:
+    - One capability = one cohesive feature area (an endpoint group). Never a catch-all bucket.
+    - Name capabilities with a domain prefix: `api-*`. Specs live flat under openspec/specs/.
+    - Target each capability spec under ~300 lines / ~12 requirements.
+    - The `api-foundation` is a FOUNDATION capability (scaffold, routing, Swagger, Clean Architecture layers). Do NOT add feature requirements to it.
+    - Select the target capability from the Capability Map in project.md.
+  tasks:
+    - Every task MUST use checkbox format: - [ ] X.Y Description
+    - Order tasks by dependency (e.g., 1. Entities, 2. DbContext, 3. Services, 4. Controllers, 5. xUnit Tests).

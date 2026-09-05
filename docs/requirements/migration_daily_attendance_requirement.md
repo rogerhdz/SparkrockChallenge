@@ -22,3 +22,8 @@ Migrate the legacy desktop attendance module (`frmDailyAttendance.frm` and assoc
   - Generate a realistic sample JSON batch payload file and save it in `docs/sample_data/attendance_batch_payload.json`.
   - Create an `attendance-api.http` file in the root directory. This file MUST send the `POST /api/attendance/bulk` request by reading the JSON file directly (e.g., using the `< ./docs/sample_data/attendance_batch_payload.json` syntax) to easily test the endpoint directly from the IDE.
 - **Validation & Evidence:** The orchestrating agent must execute `dotnet build` and `dotnet test`. It must output terminal evidence of a successful build, the total number of passing tests, and explicit confirmation that the >85% code coverage constraint was met.
+
+## Technical Clarifications
+- **Bulk payload structure:** A standard JSON list of records, each containing `studentId`, `attendDate`, `attendanceCode`, `minutesLate`, and `notes`.
+- **Batch deduplication:** If a batch contains multiple entries for the same `studentId` and `attendDate`, the last entry in the batch wins.
+- **Active alert resolution:** An alert is considered active only when it remains unresolved for the current school year. A resolved alert does not block a newly generated alert once the chronic threshold is crossed again in the same year.

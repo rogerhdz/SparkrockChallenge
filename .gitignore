@@ -1,0 +1,26 @@
+# =========================
+# .NET / C# 
+# =========================
+# Build folders
+[Bb]in/
+[Oo]bj/
+
+# Test results and coverage
+[Tt]est[Rr]esult*/
+[Tt]est[Rr]esults/
+*.coverage
+*.coveragexml
+coverage.cobertura.xml
+
+# =========================
+# IDEs and Environments
+# =========================
+# Visual Studio / VS Code
+.vscode/
+.vs/
+*.user
+*.suo
+
+# OS generated files (Mac/Windows)
+.DS_Store
+Thumbs.db

@@ -1,0 +1,29 @@
+@Attendance.Api_HostAddress = http://localhost:5163
+
+### 1. Health Check
+GET {{Attendance.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+### 2. Bulk Attendance Ingestion
+POST {{Attendance.Api_HostAddress}}/api/attendance/bulk
+Content-Type: application/json
+
+{
+  "schoolId": 1,
+  "records": [
+    {
+      "studentId": "STU-001",
+      "attendDate": "2026-09-04",
+      "attendanceCode": "P",
+      "minutesLate": 0,
+      "notes": "Present"
+    },
+    {
+      "studentId": "STU-002",
+      "attendDate": "2026-09-04",
+      "attendanceCode": "A",
+      "minutesLate": 0,
+      "notes": "Absent"
+    }
+  ]
+}
